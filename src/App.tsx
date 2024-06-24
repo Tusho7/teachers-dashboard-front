@@ -3,6 +3,7 @@ import Login from "./components/Login";
 import AdminDashboard from "./pages/AdminDashboard";
 import Home from "./pages/Home";
 import EntantStudents from "./pages/EntantStudents";
+import AbroadStudents from "./pages/AbroadStudents";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/admin-login" element={<Login />} />
         <Route path="/admin_dashboard" element={<AdminDashboard />} />
         <Route path="/entrant_students" element={<EntantStudents />} />
+        <Route path="/abroad_students" element={<AbroadStudents />} />
       </Routes>
     </BrowserRouter>
   );

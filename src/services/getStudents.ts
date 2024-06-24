@@ -7,3 +7,7 @@ export const getStudents = async () => {
 export const getEntrantStudents = async () => {
   return await axiosInstance.get("/entrant_students");
 };
+
+export const getAbroadStudents = async () => {
+  return await axiosInstance.get("/abroad_students");
+};
