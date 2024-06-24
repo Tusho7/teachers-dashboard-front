@@ -33,7 +33,7 @@ const ChartData = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-20 2xl:grid-cols-3 2xl:gap-6 mt-20 mb-20">
+    <div className="grid grid-cols-1 gap-20 2xl:grid-cols-3 2xl:gap-6 mt-20 mb-20 justify-items-center">
       <div className="max-h-[400px] w-[400px]">
         <h3 className="text-xl font-bold text-center mb-4">
           თვიური შემოსავალი (ლარი)
