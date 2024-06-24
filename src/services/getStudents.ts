@@ -11,3 +11,7 @@ export const getEntrantStudents = async () => {
 export const getAbroadStudents = async () => {
   return await axiosInstance.get("/abroad_students");
 };
+
+export const getTotalStudents = async () => {
+  return await axiosInstance.get("/total_students");
+};
