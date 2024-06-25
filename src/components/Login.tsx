@@ -1,8 +1,12 @@
 import { FormEvent } from "react";
 import { adminLogin } from "../services/Login";
 import { useNavigate } from "react-router-dom";
+import { getUser } from "../services/api/getUser";
+import { useUser } from "../contexts/useUser";
 
 const Login = () => {
+  const { setUser } = useUser();
+
   const navigate = useNavigate();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -17,6 +21,8 @@ const Login = () => {
 
     try {
       await adminLogin(email, password);
+      const { data } = await getUser();
+      setUser(data);
       localStorage.setItem("isLogin", "true");
       navigate("/admin_dashboard");
     } catch (error) {
