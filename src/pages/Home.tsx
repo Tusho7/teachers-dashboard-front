@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ChartData from "../components/Chart";
 import { getTotalStudents } from "../services/getStudents";
 import { MonthlyRevenueData } from "../types/monthlyRevenueProps";
 import { getMonthlyRevenue } from "../services/getMonthlyRevue";
 import HamburgerIcon from "../assets/hamburger.png";
+import Navigation from "../components/Navigation";
+import { Logout } from "../services/Logout";
+import DropDownMenu from "../components/DropDownMenu";
+import MonthlyRevenue from "../components/MonthlyRevenue";
 
 const Home = () => {
   const [totalStudents, setTotalStudents] = useState(0);
@@ -42,31 +45,19 @@ const Home = () => {
     setIsDropDown(!isDropDown);
   };
 
+  const handleLogout = () => {
+    try {
+      Logout();
+      localStorage.clear();
+      window.location.href = "/admin-login";
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="flex h-screen ">
-      <div className="bg-gray-800 text-white w-80 p-6 flex-col justify-between hidden 2xl:flex">
-        <div className="flex flex-col gap-10 mt-4">
-          <Link to="/students" className="text-xl font-bold">
-            სტუდენტები
-          </Link>
-          <Link to="/abroad_students" className="text-xl font-bold">
-            საზღვარგარეთის სტუდენტები
-          </Link>
-          <Link to="/entrant_students" className="text-xl font-bold">
-            აბიტურიენტები
-          </Link>
-          <Link to="/entrant_students" className="text-xl font-bold">
-            პირადი კაბინეტი
-          </Link>
-          <Link to="/entrant_students" className="text-xl font-bold">
-            პარამეტრები
-          </Link>
-        </div>
-
-        <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
-          გამოსვლა
-        </button>
-      </div>
+      <Navigation handleLogout={handleLogout} />
 
       <div className="flex-1 bg-white max-w-[1900px] mx-auto">
         <div className="p-6">
@@ -82,28 +73,7 @@ const Home = () => {
             />
           </div>
 
-          {isDropDown && (
-            <div className="bg-gray-800 text-white p-10 flex flex-col gap-10 mb-6 2xl:hidden rounded-lg ">
-              <Link to="/students" className="text-xl font-bold block w-40">
-                სტუდენტები
-              </Link>
-              <Link
-                to="/abroad_students"
-                className="text-xl font-bold block mt-2 w-40"
-              >
-                საზღვარგარეთის სტუდენტები
-              </Link>
-              <Link
-                to="/entrant_students"
-                className="text-xl font-bold block mt-2 w-40"
-              >
-                აბიტურიენტები
-              </Link>
-              <button className="mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg self-center w-96">
-                გამოსვლა
-              </button>
-            </div>
-          )}
+          {isDropDown && <DropDownMenu handleLogout={handleLogout} />}
 
           <div className="hidden 2xl:block mb-12">
             <h2 className="text-3xl font-bold text-gray-800">
@@ -135,30 +105,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
-            <div className="bg-gray-200 rounded-lg flex flex-col gap-10 shadow-md p-6 col-span-2">
-              <h3 className="text-2xl font-semibold text-gray-800 mb-0">
-                თვიური შემოსავალი
-              </h3>
-              <div className="flex flex-col md:flex-row  gap-4 justify-between">
-                <p className="text-xl text-gray-800">
-                  {monthlyRevenue
-                    ? `ლარი: ${monthlyRevenue.GEL}`
-                    : "Loading..."}
-                </p>
-                <p className="text-xl text-gray-800">
-                  {monthlyRevenue
-                    ? `დოლარი: ${monthlyRevenue.USD}`
-                    : "Loading..."}
-                </p>
-                <p className="text-xl text-gray-800">
-                  {monthlyRevenue
-                    ? `ევრო: ${monthlyRevenue.EURO}`
-                    : "Loading..."}
-                </p>
-              </div>
-            </div>
-          </div>
+          <MonthlyRevenue monthlyRevenue={monthlyRevenue} />
 
           <div className="bg-gray-200 rounded-lg shadow-md p-6 mt-10">
             <h3 className="text-2xl font-semibold text-gray-800 mb-4">
