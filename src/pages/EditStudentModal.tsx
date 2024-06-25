@@ -88,7 +88,7 @@ const EditStudentModal = ({
         how_much_pays: how_much_pays ?? "",
         currency: currency ?? "",
         days_of_week: days_of_week ?? "",
-        hours_of_days: hours_of_days ?? {},
+        hours_of_days: hours_of_days ?? [],
         from_abroad_student: !!from_abroad_student,
         entrant_student: !!entrant_student,
       };
