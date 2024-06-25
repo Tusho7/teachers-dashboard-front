@@ -1,13 +1,20 @@
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Login from "./components/Login";
 import Home from "./pages/Home";
 import EntantStudents from "./pages/EntantStudents";
 import AbroadStudents from "./pages/AbroadStudents";
 import AllStudents from "./pages/AllStudents";
+import { useEffect } from "react";
+import { setNavigate } from "./utils/navigation";
 
 function App() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setNavigate(navigate);
+  }, [navigate]);
   return (
-    <BrowserRouter>
+    <div>
       <Routes>
         <Route path="/" element={<Home />} />
 
@@ -17,7 +24,7 @@ function App() {
         <Route path="/abroad_students" element={<AbroadStudents />} />
         <Route path="/students" element={<AllStudents />} />
       </Routes>
-    </BrowserRouter>
+    </div>
   );
 }
 

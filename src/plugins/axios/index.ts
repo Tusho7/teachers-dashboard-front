@@ -6,6 +6,7 @@ const instance = axios.create({
   withCredentials: true,
   headers: {
     "Content-Type": "application/json" || "multipart/form-data",
+    Accept: "application/json" || "multipart/form-data",
   },
 });
 
@@ -27,9 +28,10 @@ instance.interceptors.response.use(
   },
   async function (error) {
     const status = error.response.status;
+    console.log(error);
     if (status === 401) {
       localStorage.setItem("isLogin", "false");
-      handleNavigation("/");
+      handleNavigation("/admin-login");
     }
     return Promise.reject(error);
   }
