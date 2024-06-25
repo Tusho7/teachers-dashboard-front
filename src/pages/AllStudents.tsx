@@ -3,6 +3,7 @@ import { getStudents } from "../services/getStudents";
 import { Student } from "../types/student";
 import { Link } from "react-router-dom";
 import EnglishBooks from "../assets/english_books.jpg";
+import EditStudentModal from "./EditStudentModal";
 
 const AllStudents = () => {
   const [students, setStudents] = useState<Student[]>([]);
@@ -10,17 +11,23 @@ const AllStudents = () => {
     null
   );
   const [search, setSearch] = useState("");
+  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
+  const [fetchStudents, setFetchStudents] = useState<() => void>(
+    () => () => {}
+  );
 
   useEffect(() => {
     const fetchStudents = async () => {
       try {
         const response = await getStudents();
+        console.log(response.data);
         setStudents(response.data);
       } catch (error) {
         console.error("Error fetching students:", error);
       }
     };
 
+    setFetchStudents(() => fetchStudents);
     fetchStudents();
   }, []);
 
@@ -42,6 +49,14 @@ const AllStudents = () => {
       student.days_of_week?.toLowerCase().includes(searchLower)
     );
   });
+
+  const handleOpenModal = (student: Student) => {
+    setSelectedStudent(student);
+  };
+
+  const handleUpdateSuccess = () => {
+    fetchStudents();
+  };
 
   return (
     <div
@@ -95,7 +110,7 @@ const AllStudents = () => {
                 <div className="text-lg font-semibold text-gray-900">{`${student.first_name} ${student.last_name}`}</div>
                 <svg
                   className={`h-6 w-6 text-gray-500 transform transition-transform ${
-                    expandedStudentId === student.id ? "rotate-180" : ""
+                    expandedStudentId === student.id ? "rotate-360" : ""
                   }`}
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -197,11 +212,28 @@ const AllStudents = () => {
                       აბიტურიენტი: {student.entrant_student ? "კი" : "არა"}
                     </span>
                   </p>
+
+                  <button
+                    className="w-full bg-cyan-700 p-2 rounded-lg text-white mt-5"
+                    onClick={() => handleOpenModal(student)}
+                  >
+                    ცვლილება
+                  </button>
                 </div>
               )}
             </div>
           ))}
         </div>
+
+        <EditStudentModal
+          isOpen={!!selectedStudent}
+          onClose={() => {
+            setSelectedStudent(null);
+            fetchStudents();
+          }}
+          onCloseSuccess={handleUpdateSuccess}
+          student={selectedStudent}
+        />
       </div>
     </div>
   );
