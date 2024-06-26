@@ -13,10 +13,10 @@ const Navigation = ({ handleLogout }: { handleLogout: () => void }) => {
         <Link to="/entrant_students" className="text-xl font-bold">
           აბიტურიენტები
         </Link>
-        <Link to="/entrant_students" className="text-xl font-bold">
+        <Link to="/personal_cabinet" className="text-xl font-bold">
           პირადი კაბინეტი
         </Link>
-        <Link to="/entrant_students" className="text-xl font-bold">
+        <Link to="/settings" className="text-xl font-bold">
           პარამეტრები
         </Link>
       </div>

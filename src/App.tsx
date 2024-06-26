@@ -5,39 +5,46 @@ import EntantStudents from "./pages/EntantStudents";
 import AbroadStudents from "./pages/AbroadStudents";
 import AllStudents from "./pages/AllStudents";
 import { useUser } from "./contexts/useUser";
+import PersonalCabinet from "./pages/PersonalCabinet";
+import Settings from "./pages/Settings";
+import { NotificationProvider } from "./contexts/NotificationContext";
+import WebSocketProvider from "./utils/WebSocketProvider";
 
 function App() {
   const { user } = useUser();
 
   return (
-    <div>
-      <Routes>
-        {user ? (
-          <>
-            <Route path="/" element={<Home />} />
-            <Route path="/admin_dashboard" element={<Home />} />
-            <Route path="/entrant_students" element={<EntantStudents />} />
-            <Route path="/abroad_students" element={<AbroadStudents />} />
-            <Route path="/students" element={<AllStudents />} />
-          </>
-        ) : (
-          <Route path="/login-admin" element={<Login />} />
-        )}
-
-        <Route
-          path="/"
-          element={
-            user ? (
-              <Navigate to="/" replace />
-            ) : (
-              <Navigate to="/login-admin" replace />
-            )
-          }
-        />
-
-        <Route path="*" element={<Navigate to="/login-admin" replace />} />
-      </Routes>
-    </div>
+    <NotificationProvider>
+      <WebSocketProvider />
+      <div>
+        <Routes>
+          {user ? (
+            <>
+              <Route path="/" element={<Home />} />
+              <Route path="/admin_dashboard" element={<Home />} />
+              <Route path="/entrant_students" element={<EntantStudents />} />
+              <Route path="/abroad_students" element={<AbroadStudents />} />
+              <Route path="/students" element={<AllStudents />} />
+              <Route path="/personal_cabinet" element={<PersonalCabinet />} />
+              <Route path="/settings" element={<Settings />} />
+            </>
+          ) : (
+            <Route path="/login-admin" element={<Login />} />
+          )}
+          <Route
+            path="/"
+            element={
+              user ? (
+                <Navigate to="/" replace />
+              ) : (
+                <Navigate to="/login-admin" replace />
+              )
+            }
+          />
+          <Route path="*" element={<Navigate to="/login-admin" replace />} />
+        </Routes>
+      </div>
+    </NotificationProvider>
   );
 }
 

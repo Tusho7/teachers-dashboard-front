@@ -20,7 +20,6 @@ const AllStudents = () => {
     const fetchStudents = async () => {
       try {
         const response = await getStudents();
-        console.log(response.data);
         setStudents(response.data);
       } catch (error) {
         console.error("Error fetching students:", error);
