@@ -9,6 +9,7 @@ import PersonalCabinet from "./pages/PersonalCabinet";
 import Settings from "./pages/Settings";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import WebSocketProvider from "./utils/WebSocketProvider";
+import AddStudent from "./pages/AddStudent";
 
 function App() {
   const { user } = useUser();
@@ -27,6 +28,7 @@ function App() {
               <Route path="/students" element={<AllStudents />} />
               <Route path="/personal_cabinet" element={<PersonalCabinet />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/add_student" element={<AddStudent />} />
             </>
           ) : (
             <Route path="/login-admin" element={<Login />} />

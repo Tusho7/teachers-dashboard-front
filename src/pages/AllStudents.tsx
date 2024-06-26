@@ -90,6 +90,11 @@ const AllStudents = () => {
           >
             საზღვარგარეთი
           </Link>
+          <Link to="/add_student">
+            <button className="px-6 py-2 text-white bg-purple-500 rounded-full shadow-md hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-400">
+              მოსწავლის დამატება
+            </button>
+          </Link>
         </div>
 
         <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
