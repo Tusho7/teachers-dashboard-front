@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { addStudent } from "../services/addStudent";
+import { FormData } from "../types/formData";
 
 const AddStudent = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     first_name: "",
     last_name: "",
     start_date: "",
     phone_number: "",
     facebook_profile: "",
-    how_much_pays: "",
+    how_much_pays: 0,
     currency: "GEL",
-    payment_status: "",
+    payment_status: "გადახდილი",
     days_per_week: 0,
     days_of_week: "",
     hours_of_days: [""],
@@ -19,7 +20,7 @@ const AddStudent = () => {
     payment_date: "",
   });
 
-  const handleHourChange = (index, value) => {
+  const handleHourChange = (index: number, value: string) => {
     const newHours = [...formData.hours_of_days];
     newHours[index] = value;
     setFormData((prevData) => ({
@@ -35,7 +36,7 @@ const AddStudent = () => {
     }));
   };
 
-  const removeHourInput = (index) => {
+  const removeHourInput = (index: number) => {
     const newHours = [...formData.hours_of_days];
     newHours.splice(index, 1);
     setFormData((prevData) => ({
@@ -44,12 +45,16 @@ const AddStudent = () => {
     }));
   };
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value, type } = e.target;
+
     if (type === "checkbox") {
+      const isChecked = (e.target as HTMLInputElement).checked;
       setFormData((prevData) => ({
         ...prevData,
-        [name]: checked,
+        [name]: isChecked,
       }));
     } else if (name === "days_per_week") {
       setFormData((prevData) => ({
@@ -64,7 +69,7 @@ const AddStudent = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData);
 
