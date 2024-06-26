@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { getEntrantStudents } from "../services/getStudents";
 import { Student } from "../types/student";
+import { Link } from "react-router-dom"; // Assuming you are using react-router for navigation
 
 const Entant_students = () => {
   const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [expandedStudentId, setExpandedStudentId] = useState<number | null>(
+    null
+  );
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -23,6 +27,10 @@ const Entant_students = () => {
     fetchStudents();
   }, []);
 
+  const toggleDetails = (id: number) => {
+    setExpandedStudentId(expandedStudentId === id ? null : id);
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -34,9 +42,14 @@ const Entant_students = () => {
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-4xl font-extrabold mb-8 text-center text-gray-800">
-        Entrant Students List
+        აბიტურიენტები
       </h1>
-
+      <Link
+        to="/"
+        className="text-blue-500 hover:underline mb-4 block text-center"
+      >
+        უკან დაბრუნება
+      </Link>
       <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {students.map((student) => (
           <div
@@ -48,15 +61,15 @@ const Entant_students = () => {
                 {`${student.first_name} ${student.last_name}`}
               </p>
               <p className="text-sm text-gray-700 mb-2">
-                <span className="font-semibold">Start Date:</span>{" "}
+                <span className="font-semibold">დაწყების თარიღი:</span>{" "}
                 {student.start_date}
               </p>
               <p className="text-sm text-gray-700 mb-2">
-                <span className="font-semibold">Phone Number:</span>{" "}
+                <span className="font-semibold">ტელეფონის ნომერი:</span>{" "}
                 {student.phone_number || "N/A"}
               </p>
               <p className="text-sm text-gray-700 mb-2">
-                <span className="font-semibold">Payment Status:</span>{" "}
+                <span className="font-semibold">გადახდის სტატუსი:</span>{" "}
                 <span
                   className={
                     student.payment_status === "გადახდილი"
@@ -67,46 +80,62 @@ const Entant_students = () => {
                   {student.payment_status}
                 </span>
               </p>
-              <p className="text-sm text-gray-700 mb-2">
-                <span className="font-semibold">Attendance Count:</span>{" "}
-                {student.attendance_count}
-              </p>
-              <p className="text-sm text-gray-700 mb-2">
-                <span className="font-semibold">Days Per Week:</span>{" "}
-                {student.days_per_week}
-              </p>
-              <p className="text-sm text-gray-700 mb-2">
-                <span className="font-semibold">Next Payment Date:</span>{" "}
-                {student.next_payment_date || "Not specified"}
-              </p>
-              <p className="text-sm text-gray-700 mb-2">
-                <span className="font-semibold">Amount:</span>{" "}
-                {student.how_much_pays} {student.currency}
-              </p>
-              <p className="text-sm text-gray-700 mb-2">
-                <span className="font-semibold">Days of Week:</span>{" "}
-                {student.days_of_week || "Not specified"}
-              </p>
-              <p className="text-sm text-gray-700 mb-2">
-                <span className="font-semibold">Hours:</span>
-              </p>
-              <ul className="list-disc ml-4 text-gray-700">
-                {Object.entries(student.hours_of_days || {}).map(
-                  ([day, hours]) => (
-                    <li key={day} className="text-sm">
-                      {`${day}: ${hours}`}
-                    </li>
-                  )
-                )}
-              </ul>
-              <p className="text-sm text-gray-700 mb-2">
-                <span className="font-semibold">Eighth Lesson Date:</span>{" "}
-                {student.eighth_lesson_date}
-              </p>
-              <p className="text-sm text-gray-700 mb-2">
-                <span className="font-semibold">From Abroad:</span>{" "}
-                {student.from_abroad_student ? "Yes" : "No"}
-              </p>
+              {expandedStudentId === student.id && (
+                <>
+                  <p className="text-sm text-gray-700 mb-2">
+                    <span className="font-semibold">დასწრების რაოდენობა:</span>{" "}
+                    {student.attendance_count}
+                  </p>
+                  <p className="text-sm text-gray-700 mb-2">
+                    <span className="font-semibold">დღეები კვირაში:</span>{" "}
+                    {student.days_per_week}
+                  </p>
+                  <p className="text-sm text-gray-700 mb-2">
+                    <span className="font-semibold">
+                      მომდევნო გადახდის თარიღი:
+                    </span>{" "}
+                    {student.next_payment_date || "Not specified"}
+                  </p>
+                  <p className="text-sm text-gray-700 mb-2">
+                    <span className="font-semibold">თანხა:</span>{" "}
+                    {student.how_much_pays} {student.currency}
+                  </p>
+                  <p className="text-sm text-gray-700 mb-2">
+                    <span className="font-semibold">დღეები:</span>{" "}
+                    {student.days_of_week || "Not specified"}
+                  </p>
+                  <p className="text-sm text-gray-700 mb-2">
+                    <span className="font-semibold">საათები:</span>
+                  </p>
+                  <ul className="list-disc ml-4 text-gray-700">
+                    {Object.entries(student.hours_of_days || {}).map(
+                      ([day, hours]) => (
+                        <li key={day} className="text-sm">
+                          {`${day}: ${hours}`}
+                        </li>
+                      )
+                    )}
+                  </ul>
+                  <p className="text-sm text-gray-700 mb-2">
+                    <span className="font-semibold">
+                      მერვე გაკვეთილის თარიღი:
+                    </span>{" "}
+                    {student.eighth_lesson_date}
+                  </p>
+                  <p className="text-sm text-gray-700 mb-2">
+                    <span className="font-semibold">
+                      საზღვარგარეთიდან მოსწავლე:
+                    </span>{" "}
+                    {student.from_abroad_student ? "Yes" : "No"}
+                  </p>
+                </>
+              )}
+              <button
+                onClick={() => toggleDetails(student.id)}
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              >
+                {expandedStudentId === student.id ? "დამალვა" : "დაწვრილებით"}
+              </button>
             </div>
           </div>
         ))}
