@@ -3,6 +3,7 @@ import { addStudent } from "../services/addStudent";
 import { FormData } from "../types/formData";
 import Swal from "sweetalert2";
 import { ApiError } from "../types/apiError";
+import StudentsImage from "../assets/students.jpg";
 
 const AddStudent = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -111,7 +112,14 @@ const AddStudent = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div
+      className="bg-gray-100 min-h-screen flex items-center justify-center p-4 bg-cover"
+      style={{
+        backgroundImage: `url(${StudentsImage})`,
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <div className="bg-white w-full max-w-4xl p-8 rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold mb-4 text-center">
           მოსწავლის დამატება
