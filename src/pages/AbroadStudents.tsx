@@ -33,7 +33,7 @@ const AbroadStudents = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>იტვირთება...</div>;
   }
 
   if (error) {

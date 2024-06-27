@@ -1,6 +1,8 @@
 import { ChangeEvent, useState } from "react";
 import { addStudent } from "../services/addStudent";
 import { FormData } from "../types/formData";
+import Swal from "sweetalert2";
+import { ApiError } from "../types/apiError";
 
 const AddStudent = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -89,7 +91,21 @@ const AddStudent = () => {
       };
 
       await addStudent(filteredData);
+      Swal.fire({
+        icon: "success",
+        title: "წარმატება",
+        text: "მოსწავლის მონაცემები წარმატებით დაემატა!",
+      });
     } catch (error) {
+      const apiError = error as ApiError;
+      const errorMessage =
+        apiError.response?.data?.message ||
+        "მოსწავლის მონაცემების განახლებისას მოხდა შეცდომა";
+      Swal.fire({
+        icon: "error",
+        title: "შეცდომა",
+        text: errorMessage,
+      });
       console.error("Error submitting form:", error);
     }
   };

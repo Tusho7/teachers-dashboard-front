@@ -3,7 +3,8 @@ import { EditStudent } from "../types/editStudent";
 import { Student } from "../types/student";
 import FormField from "../components/FormField";
 import { updateStudentData } from "../services/updateStudentData";
-
+import Swal from "sweetalert2";
+import { ApiError } from "../types/apiError";
 interface Props {
   student: Student | null;
   isOpen: boolean;
@@ -202,9 +203,23 @@ const EditStudentModal = ({
           //@ts-expect-error fix
           hours_of_days: hoursArray,
         });
+        Swal.fire({
+          icon: "success",
+          title: "წარმატება",
+          text: "მოსწავლის მონაცემები წარმატებით განახლდა",
+        });
         onCloseSuccess();
         onClose();
       } catch (error) {
+        const apiError = error as ApiError;
+        const errorMessage =
+          apiError.response?.data?.message ||
+          "მოსწავლის მონაცემების განახლებისას მოხდა შეცდომა";
+        Swal.fire({
+          icon: "error",
+          title: "შეცდომა",
+          text: errorMessage,
+        });
         console.error("Error updating student data:", error);
       }
     }

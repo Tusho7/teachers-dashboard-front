@@ -45,7 +45,7 @@ const AdminDashboard = () => {
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-4xl font-extrabold mb-8 text-center text-gray-800">
-        Students List
+        მოსწავლეების ცხრილი
       </h1>
 
       <div className="mb-8 flex justify-center">
