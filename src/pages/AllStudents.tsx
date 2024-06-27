@@ -7,9 +7,8 @@ import EditStudentModal from "./EditStudentModal";
 
 const AllStudents = () => {
   const [students, setStudents] = useState<Student[]>([]);
-  const [expandedStudentId, setExpandedStudentId] = useState<number | null>(
-    null
-  );
+  const [expandedStudentIds, setExpandedStudentIds] = useState<number[]>([]);
+
   const [search, setSearch] = useState("");
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
   const [fetchStudents, setFetchStudents] = useState<() => void>(
@@ -31,7 +30,13 @@ const AllStudents = () => {
   }, []);
 
   const toggleStudentExpansion = (studentId: number) => {
-    setExpandedStudentId((prevId) => (prevId === studentId ? null : studentId));
+    if (expandedStudentIds.includes(studentId)) {
+      setExpandedStudentIds(
+        expandedStudentIds.filter((id) => id !== studentId)
+      );
+    } else {
+      setExpandedStudentIds([...expandedStudentIds, studentId]);
+    }
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,12 +106,14 @@ const AllStudents = () => {
           {filteredStudents.map((student) => (
             <div
               key={student.id}
-              className="bg-white border border-gray-200 shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105"
+              className={`bg-gray-200 border border-gray-400 shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 ${
+                expandedStudentIds.includes(student.id) ? "shadow-md" : ""
+              }`}
             >
               <div
-                className={`flex justify-between items-center px-6 py-4 bg-blue-100 cursor-pointer ${
-                  expandedStudentId === student.id
-                    ? "rounded-t-lg"
+                className={`flex justify-between items-center px-6 py-4 cursor-pointer ${
+                  expandedStudentIds.includes(student.id)
+                    ? "bg-blue-100 rounded-t-lg"
                     : "rounded-lg"
                 }`}
                 onClick={() => toggleStudentExpansion(student.id)}
@@ -114,11 +121,11 @@ const AllStudents = () => {
                 <div className="text-lg font-semibold text-gray-900">{`${student.first_name} ${student.last_name}`}</div>
                 <svg
                   className={`h-6 w-6 text-gray-500 transform transition-transform ${
-                    expandedStudentId === student.id ? "rotate-360" : ""
+                    expandedStudentIds.includes(student.id) ? "rotate-180" : ""
                   }`}
                   xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
                   viewBox="0 0 24 24"
+                  fill="none"
                   stroke="currentColor"
                 >
                   <path
@@ -126,14 +133,14 @@ const AllStudents = () => {
                     strokeLinejoin="round"
                     strokeWidth={2}
                     d={
-                      expandedStudentId === student.id
+                      expandedStudentIds.includes(student.id)
                         ? "M5 15l7-7 7 7"
                         : "M19 9l-7 7-7-7"
                     }
                   />
                 </svg>
               </div>
-              {expandedStudentId === student.id && (
+              {expandedStudentIds.includes(student.id) && (
                 <div className="px-6 py-4">
                   <p className="text-sm text-gray-700 mb-2">
                     <span className="font-semibold text-lg">
