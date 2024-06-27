@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
+import { useNotifications } from "../contexts/NotificationContext";
 
 const Navigation = ({ handleLogout }: { handleLogout: () => void }) => {
+  const { notifications } = useNotifications();
+  const notificationCount = notifications.length;
+
   return (
     <div className="bg-gray-800 text-white w-80 p-6 flex-col justify-between hidden 2xl:flex">
-      <div className="flex flex-col gap-10 mt-4">
+      <div className="flex flex-col gap-10 mt-4 ">
         <Link to="/students" className="text-xl font-bold">
           სტუდენტები
         </Link>
@@ -13,9 +17,17 @@ const Navigation = ({ handleLogout }: { handleLogout: () => void }) => {
         <Link to="/entrant_students" className="text-xl font-bold">
           აბიტურიენტები
         </Link>
-        <Link to="/personal_cabinet" className="text-xl font-bold">
-          პირადი კაბინეტი
-        </Link>
+        <div className="relative">
+          <Link to="/personal_cabinet" className="text-xl font-bold">
+            პირადი კაბინეტი
+            {notificationCount > 0 && (
+              <span className="absolute top-0 right-12 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                {notificationCount}
+              </span>
+            )}
+          </Link>
+        </div>
+
         <Link to="/settings" className="text-xl font-bold">
           პარამეტრები
         </Link>
