@@ -74,7 +74,6 @@ const AddStudent = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
 
     try {
       const filteredHours = formData.hours_of_days.filter(

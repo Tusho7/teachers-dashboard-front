@@ -28,7 +28,6 @@ instance.interceptors.response.use(
   },
   async function (error) {
     const status = error.response.status;
-    console.log(error);
     if (status === 401) {
       localStorage.setItem("isLogin", "false");
       handleNavigation("/admin-login");
