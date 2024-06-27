@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Student } from "../types/student";
 import StudentDetail from "./StudentDetail";
-import ConfirmationModal from "./ConfirmationModal";
+import ConfirmationModal from "../modals/ConfirmationModal";
 
 interface StudentListProps {
   students: Student[];
