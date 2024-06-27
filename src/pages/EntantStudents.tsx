@@ -51,9 +51,11 @@ const Entant_students = () => {
         </h1>
         <Link
           to="/"
-          className="text-blue-500 hover:underline mb-4 block text-center"
+          className="text-white hover:underline mb-4 block text-center"
         >
-          უკან დაბრუნება
+          <button className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+            უკან დაბრუნება
+          </button>
         </Link>
         <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {students.map((student) => (

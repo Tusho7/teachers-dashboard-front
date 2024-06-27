@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getAbroadStudents } from "../services/getStudents";
 import { Student } from "../types/student";
 import { Link } from "react-router-dom";
-import Abroad from "../assets/abroad.avif";
+import Abroad from "../assets/studyabroad.jpg";
 
 const AbroadStudents = () => {
   const [students, setStudents] = useState<Student[]>([]);
@@ -57,7 +57,9 @@ const AbroadStudents = () => {
           to="/"
           className="text-blue-500 hover:underline mb-4 block text-center"
         >
-          უკან დაბრუნება
+          <button className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+            უკან დაბრუნება
+          </button>
         </Link>
         <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {students.map((student) => (
