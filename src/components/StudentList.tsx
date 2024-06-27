@@ -7,6 +7,7 @@ interface StudentCardProps {
   expandedStudentIds: number[];
   toggleStudentExpansion: (studentId: number) => void;
   handleOpenModal?: (student: Student) => void;
+  handleDeleteStudent?: (studentId: number) => void;
 }
 
 const StudentList: React.FC<StudentCardProps> = ({
@@ -14,6 +15,7 @@ const StudentList: React.FC<StudentCardProps> = ({
   expandedStudentIds,
   toggleStudentExpansion,
   handleOpenModal,
+  handleDeleteStudent,
 }) => {
   return (
     <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -123,6 +125,15 @@ const StudentList: React.FC<StudentCardProps> = ({
                   onClick={() => handleOpenModal(student)}
                 >
                   ცვლილება
+                </button>
+              )}
+
+              {handleDeleteStudent && (
+                <button
+                  className="w-full bg-red-700 p-2 rounded-lg text-white mt-5"
+                  onClick={() => handleDeleteStudent(student.id)}
+                >
+                  წაშლა
                 </button>
               )}
             </div>

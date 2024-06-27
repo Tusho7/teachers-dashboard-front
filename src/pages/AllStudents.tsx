@@ -5,6 +5,8 @@ import EnglishBooks from "../assets/english_books.jpg";
 import EditStudentModal from "./EditStudentModal";
 import StudentList from "../components/StudentList";
 import StudentsNavigation from "../components/StudentsNavigation";
+import { destroyStudent } from "../services/deleteStudent";
+import Swal from "sweetalert2";
 
 const AllStudents = () => {
   const [students, setStudents] = useState<Student[]>([]);
@@ -63,6 +65,27 @@ const AllStudents = () => {
     fetchStudents();
   };
 
+  const handleDeleteStudent = async (studentId: number) => {
+    try {
+      await destroyStudent(studentId);
+
+      Swal.fire({
+        icon: "success",
+        title: "წარმატება",
+        text: "სტუდენტი წაიშალა",
+      });
+
+      fetchStudents();
+    } catch (error) {
+      console.error("Error deleting student:", error);
+      Swal.fire({
+        icon: "error",
+        title: "შეცდომა",
+        text: "სტუდენტი ვერ წაიშალა",
+      });
+    }
+  };
+
   return (
     <div
       className="min-h-screen bg-cover"
@@ -90,6 +113,7 @@ const AllStudents = () => {
           expandedStudentIds={expandedStudentIds}
           toggleStudentExpansion={toggleStudentExpansion}
           handleOpenModal={handleOpenModal}
+          handleDeleteStudent={handleDeleteStudent}
         />
 
         <EditStudentModal
