@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getStudents } from "../services/getStudents";
 import { Student } from "../types/student";
-import EnglishBooks from "../assets/english_books.jpg";
+import allStudents from "../assets/allStudents.jpeg";
 import EditStudentModal from "./EditStudentModal";
 import StudentList from "../components/StudentList";
 import StudentsNavigation from "../components/StudentsNavigation";
@@ -89,7 +89,7 @@ const AllStudents = () => {
   return (
     <div
       className="min-h-screen bg-cover"
-      style={{ backgroundImage: `url(${EnglishBooks})` }}
+      style={{ backgroundImage: `url(${allStudents})` }}
     >
       <div className="container mx-auto py-8">
         <h1 className="text-4xl font-extrabold mb-8 text-center text-gray-800">
