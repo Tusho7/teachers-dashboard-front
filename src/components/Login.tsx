@@ -5,7 +5,11 @@ import { getUser } from "../services/api/getUser";
 import { useUser } from "../contexts/useUser";
 import Loading from "./Loading";
 
-const Login = () => {
+interface LoginProps {
+  onForgotPassword: () => void;
+}
+
+const Login = ({ onForgotPassword }: LoginProps) => {
   const { setUser } = useUser();
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
@@ -80,11 +84,17 @@ const Login = () => {
             შესვლა
           </button>
         </form>
-        <div className="mt-4 text-sm text-center">
-          <Link
-            to="/register"
-            className="font-medium text-indigo-600 hover:text-indigo-500"
-          >
+        <p
+          className="text-center text-md my-5 text-indigo-600 hover:underline font-medium hover:cursor-pointer"
+          onClick={onForgotPassword}
+        >
+          დაგავიწყდა პაროლი?
+        </p>
+
+        <div className="w-full bg-slate-500 h-[1px]"></div>
+
+        <div className="mt-4 text-md rounded-md text-center flex justify-center items-center p-2 bg-green-500 hover:bg-green-700 hover:cursor-pointer text-white w-[70%] mx-auto">
+          <Link to="/register" className="font-medium">
             ახალი ანგარიშის შექმნა
           </Link>
         </div>

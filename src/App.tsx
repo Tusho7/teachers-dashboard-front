@@ -1,5 +1,4 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "./components/Login";
 import Home from "./pages/Home";
 import EntantStudents from "./pages/EntantStudents";
 import AbroadStudents from "./pages/AbroadStudents";
@@ -11,6 +10,7 @@ import { NotificationProvider } from "./contexts/NotificationContext";
 import WebSocketProvider from "./utils/WebSocketProvider";
 import AddStudent from "./pages/AddStudent";
 import Registration from "./pages/Registration";
+import Auth from "./components/Auth";
 
 function App() {
   const { user } = useUser();
@@ -33,7 +33,7 @@ function App() {
             </>
           ) : (
             <>
-              <Route path="/login-admin" element={<Login />} />
+              <Route path="/login-admin" element={<Auth />} />
               <Route path="/register" element={<Registration />} />
             </>
           )}
