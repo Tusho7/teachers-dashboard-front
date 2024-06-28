@@ -20,7 +20,6 @@ const AllStudents = () => {
     () => () => {}
   );
 
-  console.log(students);
   useEffect(() => {
     const fetchStudents = async () => {
       try {
