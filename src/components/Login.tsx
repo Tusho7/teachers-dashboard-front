@@ -31,7 +31,7 @@ const Login = ({ onForgotPassword }: LoginProps) => {
       localStorage.setItem("isLogin", "true");
       const { data } = await getUser();
       setUser(data);
-      navigate("/admin_dashboard");
+      navigate("/dashboard");
     } catch (error) {
       console.error("Login failed:", error);
       setError("Invalid username or password. Please try again.");

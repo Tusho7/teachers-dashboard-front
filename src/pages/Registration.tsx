@@ -121,7 +121,7 @@ const Registration = () => {
           </button>
           <div className="mt-4 text-sm text-center">
             <Link
-              to="/login-admin"
+              to="/login"
               className="font-medium text-indigo-600 hover:text-indigo-500"
             >
               გაქვთ ექაუნთი ?

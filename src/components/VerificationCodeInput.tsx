@@ -27,7 +27,7 @@ const VerificationCodeInput = ({ email, logout }: VerificationCodeProps) => {
       if (logout) {
         Logout();
         localStorage.clear();
-        window.location.href = "/admin-login";
+        window.location.href = "/login";
       } else {
         navigate("/");
       }

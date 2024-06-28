@@ -30,7 +30,7 @@ instance.interceptors.response.use(
     const status = error.response.status;
     if (status === 401) {
       localStorage.setItem("isLogin", "false");
-      handleNavigation("/admin-login");
+      handleNavigation("/login");
     }
     return Promise.reject(error);
   }

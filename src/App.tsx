@@ -23,7 +23,7 @@ function App() {
           {user ? (
             <>
               <Route path="/" element={<Home />} />
-              <Route path="/admin_dashboard" element={<Home />} />
+              <Route path="/dashboard" element={<Home />} />
               <Route path="/entrant_students" element={<EntantStudents />} />
               <Route path="/abroad_students" element={<AbroadStudents />} />
               <Route path="/students" element={<AllStudents />} />
@@ -33,7 +33,7 @@ function App() {
             </>
           ) : (
             <>
-              <Route path="/login-admin" element={<Auth />} />
+              <Route path="/login" element={<Auth />} />
               <Route path="/register" element={<Registration />} />
             </>
           )}
@@ -43,11 +43,11 @@ function App() {
               user ? (
                 <Navigate to="/" replace />
               ) : (
-                <Navigate to="/login-admin" replace />
+                <Navigate to="/login" replace />
               )
             }
           />
-          <Route path="*" element={<Navigate to="/login-admin" replace />} />
+          <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </div>
     </NotificationProvider>

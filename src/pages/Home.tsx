@@ -51,7 +51,7 @@ const Home = () => {
     try {
       Logout();
       localStorage.clear();
-      window.location.href = "/admin-login";
+      window.location.href = "/login";
     } catch (err) {
       console.log(err);
     }
