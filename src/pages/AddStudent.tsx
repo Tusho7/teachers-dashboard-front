@@ -5,8 +5,10 @@ import Swal from "sweetalert2";
 import { ApiError } from "../types/apiError";
 import StudentsImage from "../assets/students.jpg";
 import { useUser } from "../contexts/useUser";
+import { useNavigate } from "react-router-dom";
 
 const AddStudent = () => {
+  const navigate = useNavigate();
   const userId = useUser().user?.id;
   const [formData, setFormData] = useState<FormData>({
     userId: userId,
@@ -99,6 +101,7 @@ const AddStudent = () => {
         title: "წარმატება",
         text: "მოსწავლის მონაცემები წარმატებით დაემატა!",
       });
+      navigate("/students");
     } catch (error) {
       const apiError = error as ApiError;
       const errorMessage =
