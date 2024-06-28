@@ -10,6 +10,7 @@ import Settings from "./pages/Settings";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import WebSocketProvider from "./utils/WebSocketProvider";
 import AddStudent from "./pages/AddStudent";
+import Registration from "./pages/Registration";
 
 function App() {
   const { user } = useUser();
@@ -31,7 +32,10 @@ function App() {
               <Route path="/add_student" element={<AddStudent />} />
             </>
           ) : (
-            <Route path="/login-admin" element={<Login />} />
+            <>
+              <Route path="/login-admin" element={<Login />} />
+              <Route path="/register" element={<Registration />} />
+            </>
           )}
           <Route
             path="/"
