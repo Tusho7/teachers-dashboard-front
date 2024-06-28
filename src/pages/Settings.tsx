@@ -3,6 +3,8 @@ import { updateUser } from "../services/updateUser";
 import { useUser } from "../contexts/useUser";
 import Swal from "sweetalert2";
 import SettingsIcon from "../assets/settings.jpg";
+import Loading from "../components/Loading";
+import VerificationCodeInput from "../components/VerificationCodeInput";
 
 const Settings = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +13,8 @@ const Settings = () => {
     first_name: "",
     last_name: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [updateComplete, setUpldateComplete] = useState(false);
 
   const { user } = useUser();
 
@@ -21,6 +25,7 @@ const Settings = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       await updateUser(user?.id, formData);
@@ -29,6 +34,7 @@ const Settings = () => {
         title: "წარმატება",
         text: "მონაცემები წარმატებით განახლდა",
       });
+      setUpldateComplete(true);
     } catch (error) {
       console.error("Error updating user:", error);
       Swal.fire({
@@ -36,8 +42,14 @@ const Settings = () => {
         title: "შეცდომა",
         text: "მონაცემები ვერ განახლდა",
       });
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (updateComplete) {
+    return <VerificationCodeInput email={formData.email} />;
+  }
 
   return (
     <div
@@ -48,6 +60,7 @@ const Settings = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
+      {loading && <Loading />}
       <div className="container mx-auto py-8">
         <h1 className="text-4xl font-extrabold mb-8 text-center text-white">
           პარამეტრები
