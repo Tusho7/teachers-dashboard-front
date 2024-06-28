@@ -4,9 +4,12 @@ import { FormData } from "../types/formData";
 import Swal from "sweetalert2";
 import { ApiError } from "../types/apiError";
 import StudentsImage from "../assets/students.jpg";
+import { useUser } from "../contexts/useUser";
 
 const AddStudent = () => {
+  const userId = useUser().user?.id;
   const [formData, setFormData] = useState<FormData>({
+    userId: userId,
     first_name: "",
     last_name: "",
     start_date: "",

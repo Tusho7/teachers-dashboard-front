@@ -8,17 +8,19 @@ import Navigation from "../components/Navigation";
 import { Logout } from "../services/Logout";
 import DropDownMenu from "../components/DropDownMenu";
 import MonthlyRevenue from "../components/MonthlyRevenue";
+import { useUser } from "../contexts/useUser";
 
 const Home = () => {
   const [totalStudents, setTotalStudents] = useState(0);
   const [monthlyRevenue, setMonthlyRevenue] =
     useState<MonthlyRevenueData | null>(null);
   const [isDropDown, setIsDropDown] = useState(false);
+  const userId = useUser()?.user?.id;
 
   useEffect(() => {
     const fetchTotalStudents = async () => {
       try {
-        const response = await getTotalStudents();
+        const response = await getTotalStudents(userId);
         setTotalStudents(response.data);
       } catch (error) {
         console.error("Error fetching total students:", error);
@@ -26,12 +28,12 @@ const Home = () => {
     };
 
     fetchTotalStudents();
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     const fetchMonthlyRevenue = async () => {
       try {
-        const response = await getMonthlyRevenue();
+        const response = await getMonthlyRevenue(userId);
         setMonthlyRevenue(response.data.totalRevenue);
       } catch (error) {
         console.error("Error fetching monthly revenue:", error);
@@ -39,7 +41,7 @@ const Home = () => {
     };
 
     fetchMonthlyRevenue();
-  }, []);
+  }, [userId]);
 
   const toggleDropDown = () => {
     setIsDropDown(!isDropDown);

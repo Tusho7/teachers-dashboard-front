@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getMonthlyRevenue } from "../services/getMonthlyRevue";
 import { Bar } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
+import { useUser } from "../contexts/useUser";
 
 Chart.register(...registerables);
 
@@ -14,11 +15,17 @@ interface MonthlyRevenueData {
 const ChartData = () => {
   const [monthlyRevenue, setMonthlyRevenue] =
     useState<MonthlyRevenueData | null>(null);
+  const userId = useUser().user?.id;
 
   useEffect(() => {
     const fetchMonthlyRevenue = async () => {
+      if (!userId) {
+        console.error("User ID is undefined.");
+        return;
+      }
+
       try {
-        const response = await getMonthlyRevenue();
+        const response = await getMonthlyRevenue(userId);
         setMonthlyRevenue(response.data.totalRevenue);
       } catch (error) {
         console.error("Error fetching monthly revenue:", error);
@@ -26,7 +33,7 @@ const ChartData = () => {
     };
 
     fetchMonthlyRevenue();
-  }, []);
+  }, [userId]);
 
   if (!monthlyRevenue) {
     return <div>Loading...</div>;

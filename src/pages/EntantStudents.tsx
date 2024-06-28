@@ -4,17 +4,18 @@ import { Student } from "../types/student";
 import { Link } from "react-router-dom";
 import Entrant from "../assets/entrant.png";
 import StudentList from "../components/StudentList";
+import { useUser } from "../contexts/useUser";
 
 const Entant_students = () => {
   const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [expandedStudentIds, setExpandedStudentIds] = useState<number[]>([]);
-
+  const userId = useUser().user?.id;
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await getEntrantStudents();
+        const response = await getEntrantStudents(userId);
         setStudents(response.data);
         setLoading(false);
       } catch (error) {
@@ -25,7 +26,7 @@ const Entant_students = () => {
     };
 
     fetchStudents();
-  }, []);
+  }, [userId]);
 
   const toggleStudentExpansion = (studentId: number) => {
     if (expandedStudentIds.includes(studentId)) {

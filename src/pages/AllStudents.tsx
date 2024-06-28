@@ -7,10 +7,12 @@ import StudentList from "../components/StudentList";
 import StudentsNavigation from "../components/StudentsNavigation";
 import { destroyStudent } from "../services/deleteStudent";
 import Swal from "sweetalert2";
+import { useUser } from "../contexts/useUser";
 
 const AllStudents = () => {
   const [students, setStudents] = useState<Student[]>([]);
   const [expandedStudentIds, setExpandedStudentIds] = useState<number[]>([]);
+  const userId = useUser().user?.id;
 
   const [search, setSearch] = useState("");
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
@@ -18,10 +20,11 @@ const AllStudents = () => {
     () => () => {}
   );
 
+  console.log(students);
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await getStudents();
+        const response = await getStudents(userId);
         setStudents(response.data);
       } catch (error) {
         console.error("Error fetching students:", error);
@@ -30,7 +33,7 @@ const AllStudents = () => {
 
     setFetchStudents(() => fetchStudents);
     fetchStudents();
-  }, []);
+  }, [userId]);
 
   const toggleStudentExpansion = (studentId: number) => {
     if (expandedStudentIds.includes(studentId)) {
