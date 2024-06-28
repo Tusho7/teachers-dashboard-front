@@ -2,12 +2,14 @@ import { FormEvent, useState } from "react";
 import { verifyUser } from "../services/registerUser";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Logout } from "../services/Logout";
 
 interface VerificationCodeProps {
   email: string;
+  logout?: boolean;
 }
 
-const VerificationCodeInput = ({ email }: VerificationCodeProps) => {
+const VerificationCodeInput = ({ email, logout }: VerificationCodeProps) => {
   const [verificationCode, setVerificationCode] = useState("");
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -22,7 +24,13 @@ const VerificationCodeInput = ({ email }: VerificationCodeProps) => {
         title: "წარმატება",
         text: "ვერიფიკაცია წარმატებით გაიარეთ !",
       });
-      navigate("/");
+      if (logout) {
+        Logout();
+        localStorage.clear();
+        window.location.href = "/admin-login";
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       console.error("Verification failed:", error);
       setError("Invalid verification code. Please try again.");

@@ -15,6 +15,7 @@ const Settings = () => {
   });
   const [loading, setLoading] = useState(false);
   const [updateComplete, setUpldateComplete] = useState(false);
+  const [logout, setLogout] = useState(false);
 
   const { user } = useUser();
 
@@ -35,6 +36,7 @@ const Settings = () => {
         text: "მონაცემები წარმატებით განახლდა",
       });
       setUpldateComplete(true);
+      setLogout(true);
     } catch (error) {
       console.error("Error updating user:", error);
       Swal.fire({
@@ -48,7 +50,7 @@ const Settings = () => {
   };
 
   if (updateComplete) {
-    return <VerificationCodeInput email={formData.email} />;
+    return <VerificationCodeInput email={formData.email} logout={logout} />;
   }
 
   return (
