@@ -4,8 +4,10 @@ import { useNotifications } from "../contexts/NotificationContext";
 const WebSocketProvider = () => {
   const { addNotification } = useNotifications();
 
+  const port = import.meta.env.VITE_WS_PORT || 8081;
+
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:8081");
+    const ws = new WebSocket(`ws://${port}`);
 
     ws.onopen = () => {
       // console.log("WebSocket connected");
@@ -27,7 +29,7 @@ const WebSocketProvider = () => {
     return () => {
       ws.close();
     };
-  }, [addNotification]);
+  }, [addNotification, port]);
 
   return null;
 };
