@@ -56,10 +56,12 @@ npm run start
 src
 ├── assets          # Static assets (images, fonts, etc.)
 ├── components      # React components
-├── hooks           # Custom hooks
+├── contexts        # Page contexts
+├── modals          # Page modals
 ├── pages           # Page components
-├── routes          # Application routes
-├── styles          # Styling files
+├── plugins         # Application plugins
+├── services        # Application services
+├── types           # Application interfaces
 ├── utils           # Utility functions
 ├── App.tsx         # Main application component
 ├── index.tsx       # Entry point file
@@ -90,7 +92,11 @@ components: Reusable React components.
 
 #
 
-hooks: Custom React hooks for shared logic.
+contexts: Context providers for managing global state.
+
+#
+
+modals: Modal components used in various pages.
 
 #
 
@@ -98,11 +104,15 @@ pages: Page components representing different views in the app.
 
 #
 
-routes: Configuration for routing within the app.
+plugins: Plugins used within the application.
 
 #
 
-styles: Contains styling files, primarily using Tailwind CSS.
+services: Service functions for API calls and other functionalities.
+
+#
+
+types: TypeScript interfaces and types.
 
 #
 
