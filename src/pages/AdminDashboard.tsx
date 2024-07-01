@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getStudents } from "../services/getStudents";
 import { Student } from "../types/student";
 import { Link } from "react-router-dom";
+import { useUser } from "../contexts/useUser";
 
 const AdminDashboard = () => {
   const [students, setStudents] = useState<Student[]>([]);
@@ -10,10 +11,12 @@ const AdminDashboard = () => {
   );
   const [search, setSearch] = useState("");
 
+  const userId = useUser().user?.id;
+
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await getStudents();
+        const response = await getStudents(userId);
         setStudents(response.data);
       } catch (error) {
         console.error("Error fetching students:", error);
@@ -21,7 +24,9 @@ const AdminDashboard = () => {
     };
 
     fetchStudents();
-  }, []);
+  }, [userId]);
+
+  console.log(students);
 
   const toggleStudentExpansion = (studentId: number) => {
     setExpandedStudentId((prevId) => (prevId === studentId ? null : studentId));
