@@ -132,4 +132,4 @@ main.tsx: Main file for rendering the React application.
 
 #
 
-This README template provides a clear structure and instructions for setting up and understanding your Teacher's Dsahboard Frontend project. Adjust the sections and details according to your specific project setup and requirements.
+This README template provides a clear structure and instructions for setting up and understanding your Teacher's Dashboard Frontend project. Adjust the sections and details according to your specific project setup and requirements.
